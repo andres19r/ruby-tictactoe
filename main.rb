@@ -33,7 +33,7 @@ class Game
     elsif p2_winner?
       puts "Congrats #{p2.name}!!! You win!!!"
     elsif full_grid?
-      puts "Owwww :( It's a draw! "
+      puts "It's a draw "
     end
   end
   private
@@ -42,7 +42,7 @@ class Game
     @player2 = player2
   end
   def choose(player)
-    puts "#{player.name} select a number:"
+    puts "#{player.name} (#{player.mark}) select a number:"
     puts "     |     |     "
     puts "   1 |  2  |  3  "
     puts " ----|-----|-----"
@@ -50,7 +50,27 @@ class Game
     puts " ----|-----|-----"
     puts "   7 |  8  |  9  "
     puts "     |     |     "
-    gets.chomp
+    sel = gets.chomp
+    if check_cell?(sel)
+      sel
+    else
+      puts "I'm sorry #{player.name}, you have to choose another number."
+      show_grid
+      choose(player)
+    end
+  end
+  def check_cell?(sel)
+    case sel
+    when "1" then @grid["row1"][0] == " " ? true : false
+    when "2" then @grid["row1"][1] == " " ? true : false
+    when "3" then @grid["row1"][2] == " " ? true : false
+    when "4" then @grid["row2"][0] == " " ? true : false
+    when "5" then @grid["row2"][1] == " " ? true : false
+    when "6" then @grid["row2"][2] == " " ? true : false
+    when "7" then @grid["row3"][0] == " " ? true : false
+    when "8" then @grid["row3"][1] == " " ? true : false
+    when "9" then @grid["row3"][2] == " " ? true : false
+    end
   end
   def paint_grid(player, place)
     case place
